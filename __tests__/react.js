@@ -12,7 +12,7 @@ import ForgotPassword from '../client/components/ForgotPassword';
 import NewBill from '../client/components/NewBill';
 import Dashboard from '../client/components/Dashboard';
 import UtilityCard from '../client/components/UtilityCard';
-
+// import jest from 'jest';
 const justClicked = jest.fn();
 
 describe('Unit Tests', () => {

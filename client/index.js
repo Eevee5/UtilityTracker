@@ -1,23 +1,9 @@
-// import React from 'react';
-// import App from './app.jsx';
-// import { createRoot } from 'react-dom/client';
+import React from 'React';
 
-// const container = document.getElementById('root');
-// const root = createRoot(container);
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
+import App from './App.jsx';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import {createRoot} from 'react-dom/client'
 
-import App from './App';
-ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
-  document.getElementById('root')
-);
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(<App/>);

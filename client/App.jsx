@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+import React, {useState} from 'React';
+import {createBrowserRouter, RouterProvider, } from "react-router-dom";
+=======
 import React, { useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+>>>>>>> 5de3f8b914d6d24a77aeaca7cab4b299175f1a7e
 import Login from './components/Login.jsx';
 import SignUp from './components/Signup.jsx';
 import ForgotPassword from './components/ForgotPassword.jsx';

@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -164,3 +166,4 @@ const ForgotPassword = () => {
   }
 
 export default ForgotPassword;
+>>>>>>> 5de3f8b914d6d24a77aeaca7cab4b299175f1a7e

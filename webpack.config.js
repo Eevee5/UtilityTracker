@@ -24,20 +24,21 @@ module.exports = {
     proxy: {
       '*': 'http://localhost:3000',
     },
-    module: {
-      rules: [
-        {
-          test: /jsx?$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/env', '@babel/react'],
-            plugins: [
-              '@babel/plugin-transform-runtime',
-              '@babel/transform-async-to-generator',
-            ],
-          },
+  },
+  module: {
+    rules: [
+      {
+        test: /jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/env', '@babel/react'],
+          plugins: [
+            '@babel/plugin-transform-runtime',
+            '@babel/transform-async-to-generator',
+          ],
         },
+      }
         {
           test: /scss$/,
           exclude: /node_modules/,
@@ -48,5 +49,6 @@ module.exports = {
     resolve: {
       extensions: ['.js', '.jsx'],
     },
-  },
-};
+  };
+
+

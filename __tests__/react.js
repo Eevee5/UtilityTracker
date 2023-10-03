@@ -1,21 +1,22 @@
 import React from 'React';
 //import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
-import { render, screen, waitFor } from '@testing-library/react';
-import regeneratorRuntime from 'regenerator-runtime';
+import { render, screen } from '@testing-library/react';
+// import regeneratorRuntime from 'regenerator-runtime';
 
 // import App from '../client/App';
 import Login from '../client/components/Login';
 import Signup from '../client/components/Signup';
+import ForgotPassword from '../client/components/ForgotPassword';
 import NewBill from '../client/components/NewBill';
+import Dashboard from '../client/components/Dashboard';
 import UtilityCard from '../client/components/UtilityCard';
-// import store from '../client/store';
+
 
 const justClicked = jest.fn();
 
 describe('Unit Tests', () => {
     describe('Signup' , () => {
-
         test('Four input fields for username, password, security question, and answer', () => {
             const signup = render(<Signup/>);
             expect(signup.getByRole('input', {name: 'username'})).toBeInTheDocument();
@@ -23,16 +24,18 @@ describe('Unit Tests', () => {
             expect(signup.getByRole('input', {name: 'security question'})).toBeInTheDocument();
             expect(signup.getByRole('input', {name: 'answer'})).toBeInTheDocument();
         })
+
         test('one button for signup', () => {
             const user = render(<Signup/>);
             expect(user.getByRole('button', {name: 'Sign up'})).toBeInTheDocument();
 
         })
+
         test('user info passed should be invoked on click', async () => {
             const props = {signup: jest.fn()};
-            render(<Signup {...props}/>);
-            const buttons = await screen.findAllByRole('button');
-            userEvent.click(screen.getByText('Sign up'));
+            const { getByRole } = render(<Signup {...props} />);
+            const signupButton = await screen.findAllByRole('button');
+            userEvent.click(signupButton);
             expect(props.signup).toHaveBeenCalled();
         })
     })
@@ -60,31 +63,53 @@ describe('Unit Tests', () => {
         expect(login.getByRole('button', { name: 'Forgot password' })).toBeInTheDocument();
       })
 
-      test('Creates a new session when clicking on the login button', () => {
+      test('Invokes three functions on click', () => {
         login = render(<Login {...props} />);
         const loginButton = login.getByRole('button', { name: 'login' });
-        userEvent.click(loginButton);
-        expect(justClicked).toHaveBeenCalled();
-      })
-
-      test('Displays the signup component when clicking on the signup button', () => {
-        login = render(<Login {...props} />);
         const signupButton = login.getByRole('button', { name: 'signup' });
+        const forgotPasswordButton = login.getByRole('button', { name: 'Forgot Password' });
+        userEvent.click(loginButton);
         userEvent.click(signupButton);
-        expect(justClicked).toHaveBeenCalled();
+        userEvent.click(forgotPasswordButton);
+        expect(justClicked).toHaveBeenCalledTimes(3);
+      })
+    })
+
+    describe('Forgot Password', () => {
+      let forgotPassword;
+      const props = {
+        verify: justClicked,
+      }
+
+      test('Contains four labels and four input fields for the username, email, secret question/answer and new password', () => {
+        forgotPassword = render(<ForgotPassword />);
+        expect(forgotPassword.getByText('Username:')).toBeInTheDocument();
+        expect(forgotPassword.getByRole('input', { name: 'username' })).toBeInTheDocument();
+        expect(forgotPassword.getByText('Email:')).toBeInTheDocument();
+        expect(forgotPassword.getByRole('input', { name: 'email' })).toBeInTheDocument();
+        expect(forgotPassword.getByText('Secret question:')).toBeInTheDocument(); // Do we want to display a 'Secret Question' label or the actual secret question?
+        expect(forgotPassword.getByRole('input', { name: 'secret-answer' })).toBeInTheDocument();
+        expect(forgotPassword.getByText('New password:')).toBeInTheDocument();
+        expect(forgotPassword.getByRole('input', { name: 'password' })).toBeInTheDocument();
       })
 
-      test('Displays the forgot password component when clicking on the forgot password button', () => {
-        login = render(<Login {...props} />);
-        const forgotPasswordButton = login.getByRole('button', { name: 'Forgot Password' });
-        userEvent.click(forgotPasswordButton);
+      test('Contains a button labeled Verify', () => {
+        forgotPassword = render(<ForgotPassword />);
+        expect(forgotPassword.getByRole('button', { name: 'Verify' })).toBeInTheDocument();
+      })
+
+      test('Invokes a function on click', () => {
+        forgotPassword = render(<ForgotPassword />);
+        const verifyButton = forgotPassword.getByRole('button', { name: 'Verify' });
+        userEvent.click(verifyButton);
         expect(justClicked).toHaveBeenCalled();
       })
     })
 
     describe('Utility Information Component Card', () => {
+        // let utilityCard = render(<UtilityCard {...props} />);
         test('Utility card displays type, date and amount.', () => {
-            const utilityCard = render(<UtilityCard {...props}/>);
+            const utilityCard = render(<UtilityCard/>);
             expect(utilityCard.getByText('Type:')).toBeInTheDocument();
             expect(utilityCard.getByText('Date:')).toBeInTheDocument();
             expect(utilityCard.getByText('Amount:')).toBeInTheDocument();
@@ -98,22 +123,35 @@ describe('Unit Tests', () => {
         test('Delete one utility card upon one click', async () => {
             const props = {Delete : jest.fn()};
             render(<UtilityCard {...props}/>);
-            const buttons = await screen.findAllByRole('button'); //check if it works
-            userEvent.click(screen.getByText('Delete'));
+            const deleteButton = await screen.findAllByRole('button');
+            userEvent.click(deleteButton);
             expect(props.Delete).toHaveBeenCalled();
         });
 
-        test('Three update buttons to update type, date and amount.', () => {
-
+        test('Three update buttons to update type, date and amount on click.', () => {
+            const props = {
+            updateType: jest.fn(),
+            updateDate: jest.fn(),
+            updateAmount: jest.fn()
+          }
+          const { getByRole } = render(<UtilityCard updateType={updateType} /> );
+          const updateDateButton = getByRole('button', { name: 'Update Type' });
+          const updateTypeButton = getByRole('button', { name: 'Update Date' });
+          const updateAmountButton = getByRole('button', { name: 'Update Amount' });
+          userEvent.click(updateTypeButton);
+          userEvent.click(updateDateButton);
+          userEvent.click(updateAmountButton);
+          expect(updateType).toHaveBeenCalled();
+          expect(updateDate).toHaveBeenCalled();
+          expect(updateAmount).toHaveBeenCalled();
         });
+
         test('Type update button to update type on click', () => {
 
-        });
-        test('Date update button to update type on click', () => {
 
-        });
-        test('Amount update button to update type on click', () => {
-
+          expect(utilityCard.getByTestId('updateTypeButton')).toBeInTheDocument();
+          expect(utilityCard.getByTestId('updateDateButton')).toBeInTheDocument();
+          expect(utilityCard.getByTestId('updateAmountButton')).toBeInTheDocument();
         });
     })
 
@@ -131,14 +169,56 @@ describe('Unit Tests', () => {
         });
         test('3 input fields fo utility type, date, amount', () => {
             const newBill = render(<NewBill/>);
-            expect(signup.getByRole('input', {name: 'Utility type'})).toBeInTheDocument();
-            expect(signup.getByRole('input', {name: 'Date'})).toBeInTheDocument();
-            expect(signup.getByRole('input', {name: 'Bill Amount'})).toBeInTheDocument();
+            expect(newBill.getByRole('input', {name: 'Utility type'})).toBeInTheDocument();
+            expect(newBill.getByRole('input', {name: 'Date'})).toBeInTheDocument();
+            expect(newBill.getByRole('input', {name: 'Bill Amount'})).toBeInTheDocument();
         })
     })
     describe('totals display', () => {
-
+      test('Display total amount of utility bills', () => {
+      const totalsDisplay = render(<Dashboard />);
+      expect(totalsDisplay.getByText('Total:')).toBeInTheDocument();
+      });
+      test('Test total amount from props', () => {
+      const props = {
+      utilityBills: [100,200,300],
+      }
+      const total = render(<Dashboard />);
+      expect(total.getByText('Total: $600')).toBeInTheDocument();
+      })
+      // test('Total amount update when new utility bill is added', () => {
+      // const props = {
+      // utilityBills: [100,200],
+      // }
+      // const total = render(<Dashboard {...props}/>);
+      // //total before adding new utility bill
+      // expect(total.getByText('Total: $300')).toBeInTheDocument();
+      // //adding new utility bill
+      // const utilityType = getByRole('input', { name: 'Utility type'});
+      // const date = getByRole('input', {name: 'Date'});
+      // const amount = getByRole('input', {name: 'Bill Amount'});
+      // const submitButton = getByRole('button', {name: 'Submit'});
+      // userEvent.type(utilityType, 'Electricity');
+      // userEvent.type(date, '10/3/23');
+      // userEvent.type(amount, '300');
+      // userEvent.click(submitButton);
+      // //check if total updated based off new utility bill input
+      // expect(total.getByText('Total: $600')).toBeInTheDocument();
+      // })
+      // test('Total amount update when a utility bill is deleted', () => {
+      // const props = {
+      // utilityBills: [100,200,300],
+      //         }
+      // const total = render(<Dashboard {...props}/>);
+      // //total before adding new utility bill
+      // expect(total.getByText('Total: $600')).toBeInTheDocument();
+      // //totalafter deleting a utility bill
+      // const deleteButton = getByRole('button', {name: 'Delete'});
+      // userEvent.click(deletebutton);
+      // //check if total updated upon deleting one utility bill
+      // expect(tota.getByText('Total: $300')).toBeInTheDocument();
+      // })
     })
 });
 
-describe('End-to-End tests')
+// describe('End-to-End tests');

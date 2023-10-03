@@ -22,6 +22,7 @@ module.exports = {
     proxy: {
       '*': 'http://localhost:3000',
     },
+  },
   module: {
     rules: [
       {
@@ -46,4 +47,5 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-};
+
+}

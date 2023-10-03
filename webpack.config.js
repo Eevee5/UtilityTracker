@@ -38,6 +38,7 @@ module.exports = {
             '@babel/transform-async-to-generator',
           ],
         },
+      }
         {
           test: /scss$/,
           exclude: /node_modules/,
@@ -48,6 +49,6 @@ module.exports = {
     resolve: {
       extensions: ['.js', '.jsx'],
     },
-  },
+  };
 
-}
+

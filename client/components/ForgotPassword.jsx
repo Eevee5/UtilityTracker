@@ -1,1 +1,3 @@
-export default ForgotPassword;
+export default function ForgotPassword() {
+  console.log('forgotpassword');
+}

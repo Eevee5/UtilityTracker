@@ -1,3 +1,3 @@
-
-
-export default Signup;
+export default function Signup() {
+  console.log('signup');
+}

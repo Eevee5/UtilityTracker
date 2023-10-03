@@ -33,10 +33,29 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('username'),
-      password: data.get('password'),
-    });
+    setUsername(data.get('username'));
+    setPassword(data.get('password'));
+  };
+
+  const validate = async () => {
+    try {
+      const response = await fetch('/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+      const data = await response.json();
+      if (data.verified === true) {
+        navigate('/Dashboard');
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -97,17 +116,20 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                {/* <Link href="#" variant="body2">
+                <Link href='#' variant='body2'>
                   Forgot password?
-                </Link> */}
-                <Button onClick={() => navigate('/ForgotPassword')}>
+                </Link>
+                {/* <Button onClick={() => navigate('/ForgotPassword')}>
                   Forgot password?
-                </Button>
+                </Button> */}
               </Grid>
               <Grid item>
                 <Link href='#' variant='body2'>
                   {"Don't have an account? Sign Up"}
                 </Link>
+                {/* <button onClick={() => navigate('/signup')}>
+                    Don't have an account? Signup
+                </button> */}
               </Grid>
             </Grid>
           </Box>

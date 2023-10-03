@@ -1,22 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// const MONGO_URI = process.env.MONGO_URI;
-
-// mongoose
-//   .connect(MONGO_URI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     dbName: 'User',
-//   })
-//   .then(() => console.log('Connected to Mongo DB.'))
-//   .catch((err) => console.log(`${err}: connect to Mongo DB`));
-
 const User = new Schema({
-  username: { type: String, require: true },
-  password: { type: String, require: true },
-  email: { type: String, require: true },
-  securityAnswer: { type: String, require: true },
+  username: { type: String, required: true },
+  password: { type: String, required: true },
+  securityQuestion: { type: String, required: true },
+  securityAnswer: { type: String, required: true },
+  // Potential fields for OAuth
+  oauthProvider: { type: String },
+  oauthId: { type: String },
+
 });
 
 module.exports = mongoose.model('User', User);

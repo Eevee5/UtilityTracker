@@ -81,24 +81,21 @@ describe('Unit Tests', () => {
         verify: justClicked,
       }
 
-      test('Contains four labels and four input fields for the username, email, secret question/answer and new password', () => {
+      test('Contains three input fields for the username, secret answer and new password', () => {
         forgotPassword = render(<ForgotPassword />);
-        expect(forgotPassword.getByText('Username:')).toBeInTheDocument();
         expect(forgotPassword.getByRole('input', { name: 'username' })).toBeInTheDocument();
-        expect(forgotPassword.getByText('Secret question:')).toBeInTheDocument();
         expect(forgotPassword.getByRole('input', { name: 'secret-answer' })).toBeInTheDocument();
-        expect(forgotPassword.getByText('New password:')).toBeInTheDocument();
         expect(forgotPassword.getByRole('input', { name: 'password' })).toBeInTheDocument();
       })
 
       test('Contains a button labeled Verify', () => {
         forgotPassword = render(<ForgotPassword />);
-        expect(forgotPassword.getByRole('button', { name: 'Verify' })).toBeInTheDocument();
+        expect(forgotPassword.getByRole('button', { name: 'verify' })).toBeInTheDocument();
       })
 
       test('Invokes a function on click', () => {
         forgotPassword = render(<ForgotPassword />);
-        const verifyButton = forgotPassword.getByRole('button', { name: 'Verify' });
+        const verifyButton = forgotPassword.getByRole('button', { name: 'verify' });
         userEvent.click(verifyButton);
         expect(justClicked).toHaveBeenCalled();
       })

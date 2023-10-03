@@ -146,6 +146,7 @@ const ForgotPassword = () => {
               <Button
                 type="submit"
                 fullWidth
+                name = "verify"
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >

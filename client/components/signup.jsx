@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'React';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -86,6 +86,7 @@ export default function SignUp() {
                   label='Username'
                   name='username'
                   autoComplete='username'
+                  data-testid='username-input'
                 />
               </Grid>
               <Grid item xs={12}>
@@ -97,6 +98,7 @@ export default function SignUp() {
                   type='password'
                   id='password'
                   autoComplete='new-password'
+                  data-testid='password-input'
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -108,6 +110,7 @@ export default function SignUp() {
                   id='securityQuestion'
                   label='Security Question'
                   autoFocus
+                  data-testid='question-input'
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -117,6 +120,7 @@ export default function SignUp() {
                   id='securityAnswer'
                   label='Security Question Answer'
                   name='securityAnswer'
+                  data-testid='answer-input'
                   //   autoComplete="family-name"
                 />
               </Grid>
@@ -127,6 +131,7 @@ export default function SignUp() {
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}
+              data-testid='button'
             >
               Sign Up
             </Button>
@@ -139,7 +144,7 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   );

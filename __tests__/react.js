@@ -3,7 +3,8 @@ import React from 'React';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 // import regeneratorRuntime from 'regenerator-runtime';
-
+import { MemoryRouter } from 'react-router-dom';
+import '@testing-library/jest-dom';
 // import App from '../client/App';
 import Login from '../client/components/Login';
 import Signup from '../client/components/Signup';
@@ -17,28 +18,35 @@ const justClicked = jest.fn();
 describe('Unit Tests', () => {
   describe('Signup', () => {
     test('Four input fields for username, password, security question, and answer', () => {
-      const signup = render(<Signup />);
-      expect(
-        signup.getByRole('input', { name: 'username' })
-      ).toBeInTheDocument();
-      expect(
-        signup.getByRole('input', { name: 'password' })
-      ).toBeInTheDocument();
-      expect(
-        signup.getByRole('input', { name: 'securityQuestion' })
-      ).toBeInTheDocument();
-      expect(signup.getByRole('input', { name: 'securityAnswer' })).toBeInTheDocument();
+      const signup = render(
+        <MemoryRouter>
+          <Signup />
+        </MemoryRouter>
+      );
+
+      expect(signup.getByTestId('username-input')).toBeInTheDocument();
+      expect(signup.getByTestId('password-input')).toBeInTheDocument();
+      expect(signup.getByTestId('question-input')).toBeInTheDocument();
+      expect(signup.getByTestId('answer-input')).toBeInTheDocument();
     });
 
     test('one button for signup', () => {
-      const user = render(<Signup />);
-      expect(user.getByRole('button', { name: 'Sign up' })).toBeInTheDocument();
+      const user = render(
+        <MemoryRouter>
+          <Signup />
+        </MemoryRouter>
+      );
+      expect(user.getByTestId('button')).toBeInTheDocument();
     });
 
     test('user info passed should be invoked on click', async () => {
       const props = { signup: jest.fn() };
-      const { getByRole } = render(<Signup {...props} />);
-      const signupButton = await screen.getByRole('button',{name: 'Sign up'});
+      render(
+        <MemoryRouter>
+          <Signup {...props} />
+        </MemoryRouter>
+      );
+      const signupButton = await screen.getByTestId('button');
       userEvent.click(signupButton);
       expect(props.signup).toHaveBeenCalled();
     });

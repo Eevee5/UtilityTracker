@@ -8,6 +8,10 @@ const db = require('./db.js');
 const userRouter = require('./routes/userRouter');
 const app = express();
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const GitHubStrategy = require('passport-github2').Strategy
+const oAuthRouter = require('./routes/oAuthRouter');
+const dataRouter = require('./routes/dataRouter');
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +30,34 @@ const PORT = process.env.PORT || 3000;
 //   });
 // }
 
+passport.use(
+  new GitHubStrategy({
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_SECRET_KEY,
+      callbackURL: process.env.GITHUB_CALLBACK_URL,
+  },
+  async (accessToken, refreshToken, profile, cb) => {
+      const user = await User.findOne({
+          accountId: profile.id,
+          provider: 'github',
+      })
+      if(!user){
+          console.log('Adding new github user to DB..');
+          const user = new User({
+              accountId : profile.id,
+              name: profile.username,
+              provider: profile.provider,
+          })
+          await user.save();
+          return cb(null, profile);
+      }
+  }
+  )
+)
+
 app.use('/user', userRouter);
+app.use('/auth', oAuthRouter);
+app.use('/data', dataRouter);
 
 app.use('*', (req, res) => {
   return res.status(404).send('Invalid endpoint');

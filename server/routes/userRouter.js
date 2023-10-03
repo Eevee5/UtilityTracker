@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const JWTController = require('../controllers/JWTController');
 
 router.post('/signup', userController.createUser, (req, res, next) => {
   if (res.locals.user) {
@@ -12,8 +13,8 @@ router.post('/signup', userController.createUser, (req, res, next) => {
 
   //   return res.status(200).json(res.locals.user);
 });
-router.post('/login', userController.validateUser, (req, res) => {
-  res.status(200).send();
+router.post('/login', userController.validateUser, JWTController.generateToken, (req, res) => {
+  res.status(200).send(res.locals.token);
 });
 
 router.get(
@@ -31,5 +32,9 @@ router.post(
     return res.status(200).send();
   }
 );
+
+router.post('/reset_password', userController.updatePassword, (req, res) => {
+  res.status(200).send();
+})
 
 module.exports = router;

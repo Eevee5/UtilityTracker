@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState} from 'React';
 import {createBrowserRouter, RouterProvider, } from "react-router-dom";
 import Login from './components/Login.jsx';
 import SignUp from './components/Signup.jsx';

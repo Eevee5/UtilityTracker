@@ -4,8 +4,10 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 dotenv.config();
+const db = require('./db.js');
 const userRouter = require('./routes/userRouter');
 const app = express();
+const jwt = require('jsonwebtoken');
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));

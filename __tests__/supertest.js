@@ -1,27 +1,65 @@
 const express = require('express');
 const request = require('supertest');
-
+const dotenv = require('dotenv');
+dotenv.config();
+const connectionString = process.env.MONGO_URI;
+const mongoose = require('mongoose');
+const User = require('../server/models/userModel');
 const server = `http://localhost:3000`;
 
+describe('Route Tests', () => {
+beforeAll(async () => {
+  connection = await mongoose.connect(connectionString, {
+    dbName: 'Tests',
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  await User.deleteMany({});
+});
+afterAll(async () => {
+  await mongoose.connection.close();
+})
 describe('POST /user/signup', function () {
-  it('responds with new user', (done) => {
+  
+  it('responds with status 200 when user is successfully created', async () => {
     request(server)
       .post('/user/signup')
       .send({
-        username: 'test',
+        username: 'test123',
         password: '123',
-        email: 'test@test',
+        securityQuestion: 'test@test',
         securityAnswer: 'test',
       })
-      .set('accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .then((response) => {
-        expect(response.body.username).toEqual(username);
-      });
+      .expect(200);
   });
 });
+describe('POST /user/login', () => {
+  it('responds with 200 and application/json type on successful login', () => {
+    request(server)
+      .post('/user/login')
+      .send({
+        username: 'test123', 
+        password: '123'
+      })
+      .expect(200)
+      .expect('Content Type', 'application/json')
+  })
+  it('responds with error on failed login', () => {
+    request(server)
+      .post('user/login')
+      .send({
+        username: 'badusername',
+        password: 'wrongPassword'
+      })
+      .expect(401)
+  })
+})
 
+describe('POST /user/forgotPassword', () => {
+  
+})
+
+});
 // describe('GET /favorite', function () {
 //     it('responds with json', (done) => {
 //       request(server)

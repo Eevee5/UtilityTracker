@@ -1,9 +1,10 @@
 import React from 'react';
 //import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { render, screen, queryByAttribute } from '@testing-library/react';
 // import regeneratorRuntime from 'regenerator-runtime';
+import '@testing-library/jest-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 // import App from '../client/App';
 // import Login from '../client/components/Login';
@@ -14,6 +15,7 @@ import ForgotPassword from '../client/components/ForgotPassword';
 // import UtilityCard from '../client/components/UtilityCard';
 
 const justClicked = jest.fn();
+const getById = queryByAttribute.bind(null, 'id');
 
 describe('Unit Tests', () => {
   describe('Signup', () => {
@@ -54,7 +56,11 @@ describe('Unit Tests', () => {
     };
 
     test('Contains two labels and two input fields for the username and the password', () => {
-      login = render(<Login />);
+      login = render(
+        <BrowserRouter>
+          <Login />
+        </BrowserRouter>
+      );
       expect(login.getByText('Username:')).toBeInTheDocument();
       expect(
         login.getByRole('input', { name: 'username' })
@@ -66,7 +72,11 @@ describe('Unit Tests', () => {
     });
 
     test('Contains three buttons labeled Login, Signup and Forgot password', () => {
-      login = render(<Login />);
+      login = render(
+        <BrowserRouter>
+          <Login />
+        </BrowserRouter>
+      );
       expect(login.getByRole('button', { name: 'Login' })).toBeInTheDocument();
       expect(login.getByRole('button', { name: 'Signup' })).toBeInTheDocument();
       expect(
@@ -75,7 +85,11 @@ describe('Unit Tests', () => {
     });
 
     test('Invokes three functions on click', () => {
-      login = render(<Login {...props} />);
+      login = render(
+        <BrowserRouter>
+          <Login />
+        </BrowserRouter>
+      );
       const loginButton = login.getByRole('button', { name: 'login' });
       const signupButton = login.getByRole('button', { name: 'signup' });
       const forgotPasswordButton = login.getByRole('button', {

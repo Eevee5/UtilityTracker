@@ -1,1 +1,3 @@
-export default NewBill;
+export default function NewBill() {
+  console.log('new bill');
+}

@@ -30,7 +30,7 @@ export default function SignUp() {
         question: question,
         answer: answer,
       });
-      if(result){
+      if (result) {
         navigate('/user/login');
       }
     } catch (err) {
@@ -45,7 +45,7 @@ export default function SignUp() {
       data.get('username'),
       data.get('password'),
       data.get('securityQuestion'),
-      data.get('securityAnswer'),
+      data.get('securityAnswer')
     );
     console.log({
       username: data.get('username'),
@@ -137,7 +137,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent='flex-end'>
               <Grid item>
-                <Link href = '/user/login' variant='body2'>
+                <Link href='/user/login' variant='body2'>
                   Already have an account? Sign in
                 </Link>
               </Grid>

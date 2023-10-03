@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   mode: 'development',
   entry: './client/index.js',
@@ -8,11 +10,11 @@ module.exports = {
   devServer: {
     static: {
       directory: path.resolve(__dirname, 'build'),
-        publicPath: '/build',
-        directory: path.join(__dirname, 'build'),
+      publicPath: '/build',
+      directory: path.join(__dirname, 'build'),
     },
     proxy: {
-        '/api': 'http://localhost:3000',
+      '/api': 'http://localhost:3000',
     },
     port: 8080,
     open: true,
@@ -36,16 +38,17 @@ module.exports = {
             '@babel/transform-async-to-generator',
           ],
         },
-      },
-      {
-        test: /scss$/,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
+      }
+        {
+          test: /scss$/,
+          exclude: /node_modules/,
+          use: ['style-loader', 'css-loader', 'sass-loader'],
+        },
+      ],
+    },
+    resolve: {
+      extensions: ['.js', '.jsx'],
+    },
+  };
 
-}
+

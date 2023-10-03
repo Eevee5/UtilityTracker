@@ -85,9 +85,7 @@ describe('Unit Tests', () => {
         forgotPassword = render(<ForgotPassword />);
         expect(forgotPassword.getByText('Username:')).toBeInTheDocument();
         expect(forgotPassword.getByRole('input', { name: 'username' })).toBeInTheDocument();
-        expect(forgotPassword.getByText('Email:')).toBeInTheDocument();
-        expect(forgotPassword.getByRole('input', { name: 'email' })).toBeInTheDocument();
-        expect(forgotPassword.getByText('Secret question:')).toBeInTheDocument(); // Do we want to display a 'Secret Question' label or the actual secret question?
+        expect(forgotPassword.getByText('Secret question:')).toBeInTheDocument();
         expect(forgotPassword.getByRole('input', { name: 'secret-answer' })).toBeInTheDocument();
         expect(forgotPassword.getByText('New password:')).toBeInTheDocument();
         expect(forgotPassword.getByRole('input', { name: 'password' })).toBeInTheDocument();

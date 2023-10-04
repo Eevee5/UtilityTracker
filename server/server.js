@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+app.use(passport.initialize());
 
 const PORT = process.env.PORT || 3000;
 
@@ -55,12 +56,24 @@ passport.use(
     }
   )
 );
-app.use('/', express.static(path.resolve(__dirname, '../build'))
-  // console.log(path.resolve(__dirname, '../build'));
-);
+app.use('/', express.static(path.resolve(__dirname, '../build')));
+app.use('/login', express.static(path.resolve(__dirname, '../build')));
+app.use('/signup', express.static(path.resolve(__dirname, '../build')));
+app.use('/dashboard', express.static(path.resolve(__dirname, '../build')));
+app.use('/forgotpassword', express.static(path.resolve(__dirname, '../build')));
+
+// app.get('/user/signup', (req, res) => {
+//   console.log('sending index.html');
+//   res.sendFile(path.resolve(__dirname)
+// , '../build/index.html')});
+// console.log(path.resolve(__dirname, '../build'));
+
 app.use('/user', userRouter);
 app.use('/auth', oAuthRouter);
 app.use('/data', dataRouter);
+
+app.use('*', express.static(path.resolve(__dirname, '../build')));
+// app.use('/', express.static(path.resolve(__dirname, '../build')))
 
 app.use('*', (req, res) => {
   return res.status(404).send('Invalid endpoint');

@@ -9,7 +9,6 @@ const User = new Schema({
   // Potential fields for OAuth
   oauthProvider: { type: String },
   oauthId: { type: String },
-
 });
 
 module.exports = mongoose.model('User', User);

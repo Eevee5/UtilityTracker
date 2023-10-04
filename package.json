@@ -2,9 +2,10 @@
   "name": "utilitytracker",
   "version": "1.0.0",
   "description": "an app to keep track of utility bills",
-  "main": "index.js",
+  "main": "./client/index.js",
   "scripts": {
     "start": "nodemon server/server.js",
+    "build": "webpack",
     "dev": "webpack serve --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,7 +29,7 @@
     "@babel/preset-react": "^7.22.15",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.11",
+    "@mui/icons-material": "^5.14.12",
     "@mui/material": "^5.14.11",
     "@testing-library/jest-dom": "^6.1.3",
     "@testing-library/react": "^14.0.0",

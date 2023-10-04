@@ -9,7 +9,7 @@ const userRouter = require('./routes/userRouter');
 const app = express();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const GitHubStrategy = require('passport-github2').Strategy
+const GitHubStrategy = require('passport-github2').Strategy;
 const oAuthRouter = require('./routes/oAuthRouter');
 const dataRouter = require('./routes/dataRouter');
 
@@ -31,33 +31,33 @@ const PORT = process.env.PORT || 3000;
 // }
 
 passport.use(
-  new GitHubStrategy({
+  new GitHubStrategy(
+    {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_SECRET_KEY,
       callbackURL: process.env.GITHUB_CALLBACK_URL,
-  },
-  async (accessToken, refreshToken, profile, cb) => {
+    },
+    async (accessToken, refreshToken, profile, cb) => {
       const user = await User.findOne({
+        accountId: profile.id,
+        provider: 'github',
+      });
+      if (!user) {
+        console.log('Adding new github user to DB..');
+        const user = new User({
           accountId: profile.id,
-          provider: 'github',
-      })
-      if(!user){
-          console.log('Adding new github user to DB..');
-          const user = new User({
-              accountId : profile.id,
-              name: profile.username,
-              provider: profile.provider,
-          })
-          await user.save();
-          return cb(null, profile);
+          name: profile.username,
+          provider: profile.provider,
+        });
+        await user.save();
+        return cb(null, profile);
       }
-  }
+    }
   )
-)
-app.use('/', (req, res) => {
-  console.log(path.resolve(__dirname, '../build'));
-  res.sendFile(path.resolve(__dirname, '../build/index.html'));
-});
+);
+app.use('/', express.static(path.resolve(__dirname, '../build'))
+  // console.log(path.resolve(__dirname, '../build'));
+);
 app.use('/user', userRouter);
 app.use('/auth', oAuthRouter);
 app.use('/data', dataRouter);

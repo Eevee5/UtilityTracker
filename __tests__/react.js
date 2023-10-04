@@ -5,121 +5,171 @@ import { render, screen, queryByAttribute } from '@testing-library/react';
 // import regeneratorRuntime from 'regenerator-runtime';
 import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
+import jest from 'jest';
 
 // import App from '../client/App';
 import Login from '../client/components/Login';
-import Signup from '../client/components/Signup';
-import ForgotPassword from '../client/components/ForgotPassword';
-import NewBill from '../client/components/NewBill';
-import Dashboard from '../client/components/Dashboard';
-import UtilityCard from '../client/components/UtilityCard';
+// import Signup from '../client/components/Signup';
+// import ForgotPassword from '../client/components/ForgotPassword';
+// import NewBill from '../client/components/NewBill';
+// import Dashboard from '../client/components/Dashboard';
+// import UtilityCard from '../client/components/UtilityCard';
 
 const justClicked = jest.fn();
 const getById = queryByAttribute.bind(null, 'id');
 
-describe('Unit Tests', () => {
-<<<<<<< HEAD
-  xdescribe('Signup', () => {
-=======
-  describe('Signup', () => {
->>>>>>> bcc97a4cb9e101a09fcd1dd74c4b786ced1e6fd5
-    test('Four input fields for username, password, security question, and answer', () => {
-      const signup = render(<Signup />);
-      expect(
-        signup.getByRole('input', { name: 'username' })
-      ).toBeInTheDocument();
-      expect(
-        signup.getByRole('input', { name: 'password' })
-      ).toBeInTheDocument();
-      expect(
-<<<<<<< HEAD
-        signup.getByRole('input', { name: 'security question' })
-      ).toBeInTheDocument();
-      expect(signup.getByRole('input', { name: 'answer' })).toBeInTheDocument();
-=======
-        signup.getByRole('input', { name: 'securityQuestion' })
-      ).toBeInTheDocument();
-      expect(signup.getByRole('input', { name: 'securityAnswer' })).toBeInTheDocument();
->>>>>>> bcc97a4cb9e101a09fcd1dd74c4b786ced1e6fd5
-    });
+describe(
+  'Unit Tests',
+  () =>
+    xdescribe('Signup', () => {
+      test('Four input fields for username, password, security question, and answer', () => {
+        const signup = render(<Signup />);
+        expect(
+          signup.getByRole('input', { name: 'username' })
+        ).toBeInTheDocument();
+        expect(
+          signup.getByRole('input', { name: 'password' })
+        ).toBeInTheDocument();
+        expect(
+          signup.getByRole('input', { name: 'security question' })
+        ).toBeInTheDocument();
+        expect(
+          signup.getByRole('input', { name: 'answer' })
+        ).toBeInTheDocument();
+      });
+      describe('Signup', () => {
+        test('Four input fields for username, password, security question, and answer', () => {
+          const signup = render(<Signup />);
+          expect(
+            signup.getByRole('input', { name: 'username' })
+          ).toBeInTheDocument();
+          expect(
+            signup.getByRole('input', { name: 'password' })
+          ).toBeInTheDocument();
+          expect(
+            signup.getByRole('input', { name: 'securityQuestion' })
+          ).toBeInTheDocument();
+          expect(
+            signup.getByRole('input', { name: 'securityAnswer' })
+          ).toBeInTheDocument();
+        });
 
-    test('one button for signup', () => {
-      const user = render(<Signup />);
-      expect(user.getByRole('button', { name: 'Sign up' })).toBeInTheDocument();
-    });
+        test('one button for signup', () => {
+          const user = render(<Signup />);
+          expect(
+            user.getByRole('button', { name: 'Sign up' })
+          ).toBeInTheDocument();
+        });
 
-    test('user info passed should be invoked on click', async () => {
-      const props = { signup: jest.fn() };
-      const { getByRole } = render(<Signup {...props} />);
-<<<<<<< HEAD
-      const signupButton = await screen.findAllByRole('button');
-=======
-      const signupButton = await screen.getByRole('button',{name: 'Sign up'});
->>>>>>> bcc97a4cb9e101a09fcd1dd74c4b786ced1e6fd5
-      userEvent.click(signupButton);
-      expect(props.signup).toHaveBeenCalled();
-    });
-  });
+        test('user info passed should be invoked on click', async () => {
+          const props = { signup: jest.fn() };
+          const { getByRole } = render(<Signup {...props} />);
+          const signupButton = await screen.findAllByRole('button');
+          userEvent.click(signupButton);
+          expect(props.signup).toHaveBeenCalled();
+        });
+      });
+      test('user info passed should be invoked on click', async () => {
+        const props = { signup: jest.fn() };
+        const { getByRole } = render(<Signup {...props} />);
+        const signupButton = await screen.getByRole('button', {
+          name: 'Sign up',
+        });
+        userEvent.click(signupButton);
+        expect(props.signup).toHaveBeenCalled();
+      });
+    }),
 
-<<<<<<< HEAD
   describe('Login', () => {
-=======
-  xdescribe('Login', () => {
->>>>>>> bcc97a4cb9e101a09fcd1dd74c4b786ced1e6fd5
     let login;
     const props = {
       login: justClicked,
       signup: justClicked,
       forgotPassword: justClicked,
     };
+    xdescribe('Login', () => {
+      let login;
+      const props = {
+        login: justClicked,
+        signup: justClicked,
+        forgotPassword: justClicked,
+      };
 
-    test('Contains two labels and two input fields for the username and the password', () => {
-<<<<<<< HEAD
-      login = render(
-        <BrowserRouter>
-          <Login />
-        </BrowserRouter>
-      );
-=======
-      login = render(<Login />);
->>>>>>> bcc97a4cb9e101a09fcd1dd74c4b786ced1e6fd5
-      expect(login.getByText('Username:')).toBeInTheDocument();
-      expect(
-        login.getByRole('input', { name: 'username' })
-      ).toBeInTheDocument();
-      expect(login.getByText('Password:')).toBeInTheDocument();
-      expect(
-        login.getByRole('input', { name: 'password' })
-      ).toBeInTheDocument();
+      test('Contains two labels and two input fields for the username and the password', () => {
+        login = render(
+          <BrowserRouter>
+            <Login />
+          </BrowserRouter>
+        );
+        expect(login.getByText('Username:')).toBeInTheDocument();
+        expect(
+          login.getById('username', { name: 'username' })
+        ).toBeInTheDocument();
+        expect(login.getByText('Password:')).toBeInTheDocument();
+        expect(
+          login.getByRole('input', { name: 'password' })
+        ).toBeInTheDocument();
+      });
+      test('Contains two labels and two input fields for the username and the password', () => {
+        login = render(<Login />);
+        expect(login.getByText('Username:')).toBeInTheDocument();
+        expect(
+          login.getByRole('input', { name: 'username' })
+        ).toBeInTheDocument();
+        expect(login.getByText('Password:')).toBeInTheDocument();
+        expect(
+          login.getByRole('input', { name: 'password' })
+        ).toBeInTheDocument();
+      });
+
+      test('Contains three buttons labeled Login, Signup and Forgot password', () => {
+        login = render(
+          <BrowserRouter>
+            <Login />
+          </BrowserRouter>
+        );
+        expect(
+          login.getByRole('button', { name: 'Login' })
+        ).toBeInTheDocument();
+        expect(
+          login.getByRole('button', { name: 'Signup' })
+        ).toBeInTheDocument();
+        expect(
+          login.getByRole('button', { name: 'Forgot password' })
+        ).toBeInTheDocument();
+      });
+      test('Contains three buttons labeled Login, Signup and Forgot password', () => {
+        login = render(<Login />);
+        expect(
+          login.getByRole('button', { name: 'Login' })
+        ).toBeInTheDocument();
+        expect(
+          login.getByRole('button', { name: 'Signup' })
+        ).toBeInTheDocument();
+        expect(
+          login.getByRole('button', { name: 'Forgot password' })
+        ).toBeInTheDocument();
+      });
+
+      test('Invokes three functions on click', () => {
+        login = render(
+          <BrowserRouter>
+            <Login />
+          </BrowserRouter>
+        );
+        const loginButton = login.getByRole('button', { name: 'login' });
+        const signupButton = login.getByRole('button', { name: 'signup' });
+        const forgotPasswordButton = login.getByRole('button', {
+          name: 'Forgot Password',
+        });
+        userEvent.click(loginButton);
+        userEvent.click(signupButton);
+        userEvent.click(forgotPasswordButton);
+        expect(justClicked).toHaveBeenCalledTimes(3);
+      });
     });
-
-    test('Contains three buttons labeled Login, Signup and Forgot password', () => {
-<<<<<<< HEAD
-      login = render(
-        <BrowserRouter>
-          <Login />
-        </BrowserRouter>
-      );
-=======
-      login = render(<Login />);
->>>>>>> bcc97a4cb9e101a09fcd1dd74c4b786ced1e6fd5
-      expect(login.getByRole('button', { name: 'Login' })).toBeInTheDocument();
-      expect(login.getByRole('button', { name: 'Signup' })).toBeInTheDocument();
-      expect(
-        login.getByRole('button', { name: 'Forgot password' })
-      ).toBeInTheDocument();
-    });
-
     test('Invokes three functions on click', () => {
-<<<<<<< HEAD
-      login = render(
-        <BrowserRouter>
-          <Login />
-        </BrowserRouter>
-      );
-=======
       login = render(<Login {...props} />);
->>>>>>> bcc97a4cb9e101a09fcd1dd74c4b786ced1e6fd5
       const loginButton = login.getByRole('button', { name: 'login' });
       const signupButton = login.getByRole('button', { name: 'signup' });
       const forgotPasswordButton = login.getByRole('button', {
@@ -130,7 +180,7 @@ describe('Unit Tests', () => {
       userEvent.click(forgotPasswordButton);
       expect(justClicked).toHaveBeenCalledTimes(3);
     });
-  });
+  }),
 
   xdescribe('Forgot Password', () => {
     let forgotPassword;
@@ -173,7 +223,7 @@ describe('Unit Tests', () => {
       userEvent.click(verifyButton);
       expect(justClicked).toHaveBeenCalled();
     });
-  });
+  }),
 
   xdescribe('Utility Information Component Card', () => {
     // let utilityCard = render(<UtilityCard {...props} />);
@@ -222,7 +272,7 @@ describe('Unit Tests', () => {
       expect(utilityCard.getByTestId('updateDateButton')).toBeInTheDocument();
       expect(utilityCard.getByTestId('updateAmountButton')).toBeInTheDocument();
     });
-  });
+  }),
 
   xdescribe('New Utility Input Box', () => {
     test('one button for submit', () => {
@@ -246,7 +296,7 @@ describe('Unit Tests', () => {
         newBill.getByRole('input', { name: 'Bill Amount' })
       ).toBeInTheDocument();
     });
-  });
+  }),
   xdescribe('totals display', () => {
     test('Display total amount of utility bills', () => {
       const totalsDisplay = render(<Dashboard />);
@@ -291,7 +341,7 @@ describe('Unit Tests', () => {
     // //check if total updated upon deleting one utility bill
     // expect(tota.getByText('Total: $300')).toBeInTheDocument();
     // })
-  });
-});
+  })
+);
 
 // describe('End-to-End tests');

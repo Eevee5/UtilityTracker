@@ -4,8 +4,14 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 dotenv.config();
+const db = require('./db.js');
 const userRouter = require('./routes/userRouter');
 const app = express();
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const GitHubStrategy = require('passport-github2').Strategy;
+const oAuthRouter = require('./routes/oAuthRouter');
+const dataRouter = require('./routes/dataRouter');
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -24,7 +30,49 @@ const PORT = process.env.PORT || 3000;
 //   });
 // }
 
-app.use('/user', userRouter);
+passport.use(
+  new GitHubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_SECRET_KEY,
+      callbackURL: process.env.GITHUB_CALLBACK_URL,
+    },
+    async (accessToken, refreshToken, profile, cb) => {
+      const user = await User.findOne({
+        accountId: profile.id,
+        provider: 'github',
+      });
+      if (!user) {
+        console.log('Adding new github user to DB..');
+        const user = new User({
+          accountId: profile.id,
+          name: profile.username,
+          provider: profile.provider,
+        });
+        await user.save();
+        return cb(null, profile);
+      }
+    }
+  )
+);
+app.use('/', express.static(path.resolve(__dirname, '../build')));
+app.use('/login', express.static(path.resolve(__dirname, '../build')));
+app.use('/signup', express.static(path.resolve(__dirname, '../build')));
+app.use('/dashboard', express.static(path.resolve(__dirname, '../build')));
+app.use('/forgotpassword', express.static(path.resolve(__dirname, '../build')));
+
+// app.get('/user/signup', (req, res) => {
+//   console.log('sending index.html');
+//   res.sendFile(path.resolve(__dirname)
+// , '../build/index.html')});
+// console.log(path.resolve(__dirname, '../build'));
+
+app.use('/user',userRouter);
+app.use('/auth', oAuthRouter);
+app.use('/data', dataRouter);
+
+app.use('*', express.static(path.resolve(__dirname, '../build')));
+// app.use('/', express.static(path.resolve(__dirname, '../build')))
 
 app.use('*', (req, res) => {
   return res.status(404).send('Invalid endpoint');

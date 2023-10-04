@@ -8,23 +8,26 @@ module.exports = {
     filename: 'bundle.js',
   },
   devServer: {
+    historyApiFallback: true,
     static: {
       directory: path.resolve(__dirname, 'build'),
       publicPath: '/build',
-      directory: path.join(__dirname, 'build'),
+      //directory: path.join(__dirname, 'build'),
     },
     proxy: {
-      '/api': 'http://localhost:3000',
+      '*': 'http://localhost:3000',
     },
     port: 8080,
     open: true,
     hot: true,
     compress: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    proxy: {
-      '*': 'http://localhost:3000',
-    },
   },
+  // plugins: [
+  //   new HtmlWebpackPlugin({
+  //     template: path.resolve(__dirname, './build/index.html'),
+  //   }),
+  // ],
   module: {
     rules: [
       {
@@ -38,7 +41,7 @@ module.exports = {
             '@babel/transform-async-to-generator',
           ],
         },
-      }
+      },
         {
           test: /scss$/,
           exclude: /node_modules/,

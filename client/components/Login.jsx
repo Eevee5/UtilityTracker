@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 // import * as React from 'react';
 // import Avatar from '@mui/material/Avatar';
 // import Button from '@mui/material/Button';
@@ -234,4 +231,3 @@ export default function Login() {
     </html>
   );
 }
->>>>>>> 5de3f8b914d6d24a77aeaca7cab4b299175f1a7e

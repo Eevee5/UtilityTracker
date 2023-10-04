@@ -14,16 +14,13 @@ module.exports = {
       directory: path.join(__dirname, 'build'),
     },
     proxy: {
-      '/api': 'http://localhost:3000',
+      '/': 'http://localhost:3000',
     },
     port: 8080,
     open: true,
     hot: true,
     compress: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    proxy: {
-      '*': 'http://localhost:3000',
-    },
   },
   module: {
     rules: [
@@ -38,7 +35,7 @@ module.exports = {
             '@babel/transform-async-to-generator',
           ],
         },
-      }
+      },
         {
           test: /scss$/,
           exclude: /node_modules/,

@@ -54,7 +54,10 @@ passport.use(
   }
   )
 )
-
+app.use('/', (req, res) => {
+  console.log(path.resolve(__dirname, '../build'));
+  res.sendFile(path.resolve(__dirname, '../build/index.html'));
+});
 app.use('/user', userRouter);
 app.use('/auth', oAuthRouter);
 app.use('/data', dataRouter);

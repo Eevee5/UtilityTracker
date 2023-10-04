@@ -24,7 +24,7 @@ export default function SignUp() {
   const navigate = useNavigate();
   const signup = async (uname, password, question, answer) => {
     try {
-      const result = await axios.post('http://localhost:3000/user/signup', {
+      const result = await axios.post('/user/signup', {
         username: uname,
         password: password,
         question: question,

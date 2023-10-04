@@ -2,9 +2,10 @@
   "name": "utilitytracker",
   "version": "1.0.0",
   "description": "an app to keep track of utility bills",
-  "main": "index.js",
+  "main": "./client/index.js",
   "scripts": {
     "start": "nodemon server/server.js",
+    "build": "webpack",
     "dev": "webpack serve --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

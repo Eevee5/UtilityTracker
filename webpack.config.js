@@ -8,13 +8,14 @@ module.exports = {
     filename: 'bundle.js',
   },
   devServer: {
+    historyApiFallback: true,
     static: {
       directory: path.resolve(__dirname, 'build'),
       publicPath: '/build',
-      directory: path.join(__dirname, 'build'),
+      //directory: path.join(__dirname, 'build'),
     },
     proxy: {
-      '/': 'http://localhost:3000',
+      '*': 'http://localhost:3000',
     },
     port: 8080,
     open: true,
@@ -22,6 +23,11 @@ module.exports = {
     compress: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
   },
+  // plugins: [
+  //   new HtmlWebpackPlugin({
+  //     template: path.resolve(__dirname, './build/index.html'),
+  //   }),
+  // ],
   module: {
     rules: [
       {

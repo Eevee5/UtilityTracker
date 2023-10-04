@@ -27,11 +27,11 @@ export default function SignUp() {
       const result = await axios.post('/user/signup', {
         username: uname,
         password: password,
-        question: question,
-        answer: answer,
+        securityQuestion: question,
+        securityAnswer: answer,
       });
       if (result) {
-        navigate('/user/login');
+        navigate('/login');
       }
     } catch (err) {
       console.log('Error in signup.jsx rendering signup data', err);
@@ -137,7 +137,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent='flex-end'>
               <Grid item>
-                <Link href='/user/login' variant='body2'>
+                <Link href='/' variant='body2'>
                   Already have an account? Sign in
                 </Link>
               </Grid>

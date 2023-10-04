@@ -4,7 +4,6 @@ const router = express.Router();
 const JWTController = require('../controllers/JWTController');
 const dataController = require('../controllers/dataController');
 
-
 router.get(
   '/bills',
   JWTController.validateToken,

@@ -5,10 +5,22 @@ const JWTController = {};
 
 // TOKEN_SECRET
 JWTController.generateToken = (req, res, next) => {
-  const token = jwt.sign(res.locals.userId, process.env.TOKEN_SECRET, {
-    expiresIn: '1800s',
-  });
+  console.log('in generateToken');
+  console.log('userID ' + res.locals.userId);
+  const token = jwt.sign(
+    { userId: res.locals.userId },
+    process.env.TOKEN_SECRET,
+    {
+      expiresIn: '1800s',
+    }
+  );
+  // const jwtToken = jwt.sign(
+  //   { client_id: clientID },
+  //   process.env.TOKEN_SECRET
+  // );
+  console.log('token ' + token);
   res.locals.token = token;
+
   return next();
 };
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,62 +12,50 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider} from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import { useNavigate } from 'react-router-dom';
 
-// // export default function Login() {
-// //     const [username, setUsername] = useState();
-// //     const [password, setPassword] = useState();
-
-// // }
-
-// // TODO remove, this demo shouldn't need to reset the theme.
-
-// // const defaultTheme = createTheme();
-
-// export default function SignIn() {
-//   const [username, setUsername] = useState();
-//   const [password, setPassword] = useState();
-
-//   const navigate = useNavigate();
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     const data = new FormData(event.currentTarget);
-//     setUsername(data.get('username'));
-//     setPassword(data.get('password'));
-//   };
-
-//   const validate = async () => {
-//     try {
-//       const response = await fetch('/user/login', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//           username: username,
-//           password: password,
-//         }),
-//       });
-//       const data = await response.json();
-//       if (data.verified === true) {
-//         navigate('/Dashboard');
-//       }
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
 
 const defaultTheme = createTheme();
-export default function SignIn() {
+export default function SignIn(props) {
+  const Navigate = useNavigate();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
+    setUsername(data.get('username'));
+    setPassword(data.get('password'));
+  };
+
+  const validate = async () => {
+    try {
+      const response = await fetch('/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log('data', data)
+      console.log('token', data.token)
+      if (data.token) {
+        console.log('props.token '+props.token)
+        // props.token(data.token);
+        props.token(data.token);
+        console.log('props.token ', props.set)
+        Navigate('/Dashboard');
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -120,6 +108,7 @@ export default function SignIn() {
             />
             <Button
               type='submit'
+              onClick={validate}
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}
@@ -128,40 +117,57 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href='/forgotPassword' variant='body2'>
+                {/* <Link href='/forgotPassword' variant='body2'>
                   Forgot password?
-                </Link>
-                {/* <Button
+                </Link> */}
+                <Button
                   type='button'
                   id='Forgot password'
-                  onClick={() => navigate('/user/forgotpassword')}
+                  onClick={() => Navigate('/forgotpassword')}
                 >
                 Forgot Password?
-                </Button> */}
-                <Link href='/signup' variant='body2'>
+                </Button>
+                {/* < href='/signup' variant='body2'>
                   "Don't have an account? Sign Up"
-                </Link>
-                {/* <Button
+                </Link> */}
+                <Button
                   type='button'
                   id='signup'
-                  onClick={() => navigate('/user/signup')}
+                  onClick={() => Navigate('/signup')}
                 >
                   Don't have an account? Signup
-                </Button> */}
+                </Button>
               </Grid>
             </Grid>
           </Box>
         </Box>
+        <Button
+          fullWidth
+          variant='contained'
+          startIcon={<GitHubIcon />}  // Add the GitHub icon to the start of the button
+          sx={{
+            mt: 3, 
+            mb: 2,
+            backgroundColor: "#24292E",  // GitHub's dark gray color
+            '&:hover': {
+              backgroundColor: "#3f4448"  // A slightly lighter gray for hover state
+            }
+          }}
+          onClick={() => window.location.href = '/auth/github'}
+        >
+          Sign In with GitHub
+        </Button>
       </Container>
     </ThemeProvider>
   );
-}                     
-               
+}
 
-{/* // import React, { useState } from 'react';
+{
+  /* // import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
-// export default function Login() { */}
+// export default function Login() { */
+}
 //   const [username, setUsername] = useState('');
 //   const [password, setPassword] = useState('');
 

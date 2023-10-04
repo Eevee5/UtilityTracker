@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+app.use(passport.initialize());
 
 const PORT = process.env.PORT || 3000;
 
@@ -67,7 +68,7 @@ app.use('/forgotpassword', express.static(path.resolve(__dirname, '../build')));
 // , '../build/index.html')});
 // console.log(path.resolve(__dirname, '../build'));
 
-app.use('/user',userRouter);
+app.use('/user', userRouter);
 app.use('/auth', oAuthRouter);
 app.use('/data', dataRouter);
 

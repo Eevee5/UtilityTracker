@@ -4,8 +4,6 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const JWTController = require('../controllers/JWTController');
 
-
-
 router.post('/signup', userController.createUser, (req, res, next) => {
   if (res.locals.user) {
     console.log('User successfully registered');
@@ -16,9 +14,18 @@ router.post('/signup', userController.createUser, (req, res, next) => {
 
   //   return res.status(200).json(res.locals.user);
 });
-router.post('/login', userController.validateUser, JWTController.generateToken, (req, res) => {
-  res.status(200).send(res.locals.token);
-});
+router.post(
+  '/login',
+  userController.validateUser,
+  JWTController.generateToken,
+  (req, res) => {
+    console.log('User after generateToken');
+    res
+      .status(200)
+      .header('token', res.locals.token)
+      .json({ token: res.locals.token });
+  }
+);
 
 router.get(
   '/forgotPassword/:username',
@@ -28,16 +35,12 @@ router.get(
   }
 );
 
-router.post(
-  '/forgotPassword',
-  userController.validateSecAnswer,
-  (req, res) => {
-    return res.status(200).send();
-  }
-);
+router.post('/forgotPassword', userController.validateSecAnswer, (req, res) => {
+  return res.status(200).send();
+});
 
 router.post('/reset_password', userController.updatePassword, (req, res) => {
   res.status(200).send();
-})
+});
 
 module.exports = router;

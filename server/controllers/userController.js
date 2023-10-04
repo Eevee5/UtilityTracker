@@ -61,9 +61,12 @@ userController.validateUser = async (req, res, next) => {
     });
   }
   try {
-    const user = User.findOne({ username: username });
+    const user = await User.findOne({ username: username });
+    console.log('user ', user);
     res.locals.userId = user._id;
+    console.log('user._id ' + res.locals.userId);
     const result = await bcrypt.compare(password, user.password);
+    console.log('after result');
     if (!result) return res.status(401).send();
     else return next();
   } catch (err) {
@@ -100,24 +103,22 @@ userController.validateSecAnswer = async (req, res, next) => {
     });
     if (checkSecAnswer) {
       return next();
-    }
-    else return res.status(401).send();
+    } else return res.status(401).send();
   } catch (err) {
     return next(err);
   }
 };
 
 userController.updatePassword = async (req, res, next) => {
-  const {username, password} = req.body;
-  const update = {password: password};
-  if(!username ||!password) return next('you need a password');
-  try{
-    await User.findOneAndUpdate({username}, update);
+  const { username, password } = req.body;
+  const update = { password: password };
+  if (!username || !password) return next('you need a password');
+  try {
+    await User.findOneAndUpdate({ username }, update);
     return next();
-  }
-  catch (err) {
+  } catch (err) {
     return next(err);
   }
-}
+};
 
 module.exports = userController;

@@ -8,22 +8,23 @@ import Dashboard from './components/Dashboard.jsx';
 
 const App = () => {
   const [bill, setBill] = useState({});
+  const [token, setToken] = useState('');
   const router = createBrowserRouter([
     {
       path: '/',
       // element: <Dashboard set={setBill} />,
-      element: <Login/>
+      element: <Login token={setToken}/>
     },
     {
       path: '/login',
       // element: <Dashboard set={setBill} />,
-      element: <Login/>
+      element: <Login token={setToken}/>
     },
     {
       // path: '/user/login',
       // element: <Login />,
       path: '/dashboard',
-      element: <Dashboard set={setBill} />,
+      element: <Dashboard token={token} set={setBill} />,
     },
     {
       path: '/signup',
